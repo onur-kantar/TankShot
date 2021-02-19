@@ -2,15 +2,13 @@
 using Photon.Realtime;
 using UnityEngine;
 
-public class TankBody : MonoBehaviour
+public class TankBody : MonoBehaviourPun
 {
     [Header ("Movement")]
     VariableJoystick movementJoystick;
-    [SerializeField]
-    float rotateSpeed, speed;
+    [SerializeField] float rotateSpeed, speed;
 
     Vector3 direction;
-
     public Player tankPlayer;
 
     void Start()
@@ -20,7 +18,10 @@ public class TankBody : MonoBehaviour
     }
     void FixedUpdate()
     {
-        Move();
+        if (photonView.IsMine)
+        {
+            Move();
+        }
     }
     void Move()
     {

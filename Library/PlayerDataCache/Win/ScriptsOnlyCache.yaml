@@ -3,9 +3,8 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - Arena
     - Bullet
+    - GameSceneManager
     - LobbyManager
-    - PhotonManager
-    - PlayerManager
     - PreparePool
     - TankBody
     - TankTurret
@@ -171,8 +170,6 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11598}
     - Class: 114
-      Script: {instanceID: 11634}
-    - Class: 114
       Script: {instanceID: 11738}
     - Class: 114
       Script: {instanceID: 12428}
@@ -225,7 +222,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 14892}
     - Class: 114
-      Script: {instanceID: 18116}
+      Script: {instanceID: 18390}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -497,7 +494,7 @@ ScriptsOnlyBuild:
     className: TestResultRendererCallback
   - hash:
       serializedVersion: 2
-      Hash: 9b05c4e59144d8618a89d132931d6ee3
+      Hash: 4740dd869fdcf6b8d90be4a95718ce1c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Bullet
@@ -1028,7 +1025,7 @@ ScriptsOnlyBuild:
       Hash: 7cd917339e3af72e0cb1a28050d439cf
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
-    className: PhotonManager
+    className: GameSceneManager
   - hash:
       serializedVersion: 2
       Hash: c656dcc13ae391b68d594cc8f9c590b0

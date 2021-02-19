@@ -9,13 +9,13 @@ public class PlayerManager : MonoBehaviourPun
     {
         //PhotonNetwork.SendRate = 200;
         //PhotonNetwork.SerializationRate = 100;
-        if (!photonView.IsMine)
-        {
-            foreach (MonoBehaviour script in scripts)
-            {
-                Destroy(script);
-            }
-        }
+        //if (!photonView.IsMine)
+        //{
+        //    foreach (MonoBehaviour script in scripts)
+        //    {
+        //        Destroy(script);
+        //    }
+        //}
     }
     //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     //{

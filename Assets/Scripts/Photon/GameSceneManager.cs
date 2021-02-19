@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PhotonManager : MonoBehaviour
+public class GameSceneManager : MonoBehaviour
 {
     [SerializeField]
     GameObject[] spawnPoints;

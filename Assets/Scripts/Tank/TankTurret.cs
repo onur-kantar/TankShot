@@ -27,19 +27,20 @@ public class TankTurret : MonoBehaviourPunCallbacks
     RaycastHit2D hit;
 
     public TankBody ownerTankBody;
-    //private PhotonView photonView;
     void Start()
     {
-        //photonView = GetComponent<PhotonView>();
         aimJoystick = GameObject.Find("Aim").GetComponent<VariableJoystick>();
         currentAmmo = maxAmmo;
         lineRenderer = GetComponent<LineRenderer>();
     }
     void FixedUpdate()
     {
-        Rotate();
-        ShootLaser();
-        Shoot();
+        if (photonView.IsMine)
+        {
+            Rotate();
+            ShootLaser();
+            Shoot();
+        }
     }
     void Rotate()
     {
@@ -50,7 +51,6 @@ public class TankTurret : MonoBehaviourPunCallbacks
             transform.up = Vector2.Lerp(transform.up, direction, rotateSpeed * Time.fixedDeltaTime);
         }
     }
-
     void Shoot()
     {
         if (aimJoystick.isDrop && permissionToShoot)
@@ -59,26 +59,26 @@ public class TankTurret : MonoBehaviourPunCallbacks
             {
                 //Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
                 GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-                bullet.GetComponent<Bullet>().ownerTankBody = ownerTankBody;
-                ownerTankBody.GetComponent<PhotonView>().RPC("OnHit", RpcTarget.Others);
-                //photonView.RPC("ShootRPC", RpcTarget.Others, shootPoint.position);
+                bullet.GetComponent<Bullet>().ownerTankTurret = this;
+                //ownerTankBody.GetComponent<PhotonView>().RPC("OnHit", RpcTarget.Others);
+                photonView.RPC("ShootRPC", RpcTarget.Others, shootPoint.position, shootPoint.rotation);
                 ReduceAmmo();
             }
             aimJoystick.isDrop = false;
         }
     }
     [PunRPC]
-    public void ShootRPC(Vector3 bulletStartPosition)
+    public void ShootRPC(Vector3 bulletStartPosition, Quaternion bulletStartRotation)
     {
-        GameObject bullet = Instantiate(bulletPrefab, bulletStartPosition, shootPoint.rotation);
-        bullet.GetComponent<Bullet>().ownerTankBody = ownerTankBody;
+        GameObject bullet = Instantiate(bulletPrefab, bulletStartPosition, bulletStartRotation);
+        bullet.GetComponent<Bullet>().ownerTankTurret = this;
     }
     //TODO: --
-    public static void ReduceAmmo()
+    void ReduceAmmo()
     {
         currentAmmo--;
     }
-    public static void IncreaseAmmo()
+    public void IncreaseAmmo()
     {
         currentAmmo++;
     }

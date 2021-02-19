@@ -87,8 +87,8 @@
     <Compile Include="Assets\Photon\PhotonRealtime\Demos\DemoLoadBalancing\ConnectAndJoinRandomLb.cs" />
     <Compile Include="Assets\Scripts\Arena\Arena.cs" />
     <Compile Include="Assets\Scripts\Arena\ArenaCell.cs" />
+    <Compile Include="Assets\Scripts\Photon\GameSceneManager.cs" />
     <Compile Include="Assets\Scripts\Photon\LobbyManager.cs" />
-    <Compile Include="Assets\Scripts\Photon\PhotonManager.cs" />
     <Compile Include="Assets\Scripts\Photon\PlayerManager.cs" />
     <Compile Include="Assets\Scripts\Photon\PreparePool.cs" />
     <Compile Include="Assets\Scripts\Tank\Bullet.cs" />

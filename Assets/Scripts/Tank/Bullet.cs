@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     float speed, time;
     Rigidbody2D rb2d;
     Vector2 newDirection;
-    [HideInInspector] public TankBody ownerTankBody;
+    [HideInInspector] public TankTurret ownerTankTurret;
 
     void Start()
     {
@@ -23,16 +23,17 @@ public class Bullet : MonoBehaviour
     }
     void OnDestroy()
     {
-        TankTurret.IncreaseAmmo();
+        ownerTankTurret.IncreaseAmmo();
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
         
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (ownerTankBody.tankPlayer.IsLocal)
+            if (ownerTankTurret.ownerTankBody.tankPlayer.IsLocal)
             {
-                ownerTankBody.GetComponent<PhotonView>().RPC("OnHit", collision.gameObject.GetComponent<TankBody>().tankPlayer, ownerTankBody.tankPlayer);
+                ownerTankTurret.ownerTankBody.GetComponent<PhotonView>().RPC("OnHit", collision.gameObject.GetComponent<TankBody>().tankPlayer, ownerTankTurret.ownerTankBody.tankPlayer);
+                Debug.Log(ownerTankTurret.ownerTankBody.tankPlayer.NickName);
             }
             //Destroy(collision.gameObject);
             //Destroy(gameObject);
