@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7748055348486484693}
   - component: {fileID: 3605514338867899349}
   - component: {fileID: 8002050130722535059}
+  - component: {fileID: 1471194992721978355}
   m_Layer: 8
   m_Name: Bullet
   m_TagString: Untagged
@@ -135,4 +136,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   time: 5
-  ownerTankBody: {fileID: 0}
+  ownerTankTurret: {fileID: 0}
+--- !u!114 &1471194992721978355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2616172063108275219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  observableSearch: 0
+  Synchronization: 3
+  OwnershipTransfer: 0
+  ObservedComponents: []
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

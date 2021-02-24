@@ -3908,7 +3908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e9e91fe456d6f48b8db841516411d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  variableJoystick: {fileID: 1118640208}
+  ownerTankBody: {fileID: 0}
   rotateSpeed: 5
   bulletPrefab: {fileID: 2616172063108275219, guid: 3787653d3ecfbfd4780d4809b2e016b9,
     type: 3}
@@ -4252,9 +4252,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 620cf4ea37f64364c9208cdb2c998e76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  variableJoystick: {fileID: 573566677}
   rotateSpeed: 5
   speed: 2
+  isAlive: 0
 --- !u!70 &1723979667
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -5201,6 +5201,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4058317791255388874, guid: bbb3ff789e86b2944849cdae15ae5e4f,
+        type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8570066415666899227, guid: bbb3ff789e86b2944849cdae15ae5e4f,
         type: 3}
       propertyPath: variableJoystick
@@ -5270,6 +5275,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8791262271963028180, guid: bbb3ff789e86b2944849cdae15ae5e4f,
+        type: 3}
+      propertyPath: viewIdField
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbb3ff789e86b2944849cdae15ae5e4f, type: 3}

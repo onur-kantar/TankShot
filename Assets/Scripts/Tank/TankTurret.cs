@@ -1,32 +1,29 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public class TankTurret : MonoBehaviourPunCallbacks
 {
+    public TankBody ownerTankBody;
+
     [Header ("Rotate")]
+    [SerializeField] float rotateSpeed;
     VariableJoystick aimJoystick;
-    [SerializeField]
-    float rotateSpeed;
     Vector3 direction;
 
     [Header("Shoot")]
-    [SerializeField]
-    GameObject bulletPrefab;
-    [SerializeField]
-    Transform shootPoint;
-    [SerializeField]
-    float coolDown, maxAmmo;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Transform shootPoint;
+    [SerializeField] float coolDown, maxAmmo;
     float timeStamp;
-    static float currentAmmo;
+    float currentAmmo;
     bool permissionToShoot;
 
     [Header("Laser")]
-    [SerializeField]
-    float distanceRay;
+    [SerializeField] float distanceRay;
     LineRenderer lineRenderer;
     RaycastHit2D hit;
-
-    public TankBody ownerTankBody;
+    
     void Start()
     {
         aimJoystick = GameObject.Find("Aim").GetComponent<VariableJoystick>();
@@ -42,6 +39,8 @@ public class TankTurret : MonoBehaviourPunCallbacks
             Shoot();
         }
     }
+
+    #region Rotate
     void Rotate()
     {
         if (aimJoystick.Direction.magnitude != 0)
@@ -51,6 +50,9 @@ public class TankTurret : MonoBehaviourPunCallbacks
             transform.up = Vector2.Lerp(transform.up, direction, rotateSpeed * Time.fixedDeltaTime);
         }
     }
+    #endregion
+
+    #region Shoot
     void Shoot()
     {
         if (aimJoystick.isDrop && permissionToShoot)
@@ -58,19 +60,20 @@ public class TankTurret : MonoBehaviourPunCallbacks
             if (CoolDown() && currentAmmo > 0)
             {
                 //Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-                GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
-                bullet.GetComponent<Bullet>().ownerTankTurret = this;
+                //GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+                //bullet.GetComponent<Bullet>().ownerTankTurret = this;
                 //ownerTankBody.GetComponent<PhotonView>().RPC("OnHit", RpcTarget.Others);
-                photonView.RPC("ShootRPC", RpcTarget.Others, shootPoint.position, shootPoint.rotation);
+                photonView.RPC("ShootRPC", RpcTarget.All, shootPoint.position, shootPoint.rotation, PhotonNetwork.AllocateViewID(false));
                 ReduceAmmo();
             }
             aimJoystick.isDrop = false;
         }
     }
     [PunRPC]
-    public void ShootRPC(Vector3 bulletStartPosition, Quaternion bulletStartRotation)
+    public void ShootRPC(Vector3 bulletStartPosition, Quaternion bulletStartRotation, int viewId)
     {
         GameObject bullet = Instantiate(bulletPrefab, bulletStartPosition, bulletStartRotation);
+        bullet.GetComponent<PhotonView>().ViewID = viewId;
         bullet.GetComponent<Bullet>().ownerTankTurret = this;
     }
     //TODO: --
@@ -90,7 +93,10 @@ public class TankTurret : MonoBehaviourPunCallbacks
             return true;
         }
         return false;
-    }
+    }//TODO: -- IEnumerator
+    #endregion
+
+    #region Laser
     void ShootLaser()
     {
         if (aimJoystick.Direction.magnitude > 0.3f)
@@ -120,4 +126,5 @@ public class TankTurret : MonoBehaviourPunCallbacks
         lineRenderer.SetPosition(0, startPos);
         lineRenderer.SetPosition(1, endPos);
     }
+    #endregion
 }

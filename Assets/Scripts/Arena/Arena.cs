@@ -126,12 +126,12 @@ public class Arena : MonoBehaviour
                 {
                     if (arena[r, c].wallTypes == WallTypes.Horizontal)
                     {
-                        childObject = PhotonNetwork.Instantiate("Horizontal Wall Point", startPosition + new Vector2(c * 2, r * -2), Quaternion.identity);
-                        childObject.transform.parent = transform; //TODO -- does not work on the other player -- PunRPC
+                        childObject = PhotonNetwork.Instantiate("Wall", startPosition + new Vector2(c * 2, (r * -2) - 1), Quaternion.identity);
+                        childObject.transform.parent = transform; //TODO: -- does not work on the other player -- PunRPC
                     }
                     else if (arena[r, c].wallTypes == WallTypes.Vertical)
                     {
-                        childObject = PhotonNetwork.Instantiate("Vertical Wall Point", startPosition + new Vector2(c * 2, r * -2), Quaternion.identity);
+                        childObject = PhotonNetwork.Instantiate("Wall", startPosition + new Vector2((c * 2) + 1, r * -2), Quaternion.Euler(0, 0, 90));
                         childObject.transform.parent = transform;
                     }
                 }
