@@ -1,5 +1,8 @@
-﻿using Photon.Pun;
+﻿using Firebase.Auth;
+using Firebase.Database;
+using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -17,7 +20,10 @@ public class GameSceneManager : MonoBehaviourPun
     [Header("Endgame Manager")]
     [SerializeField] GameObject Result;
     [SerializeField] TextMeshProUGUI resultText, scoreText;
-    bool isMatchOver;
+    [HideInInspector] public bool isMatchOver;
+    DatabaseReference DBreference;
+    FirebaseAuth auth;
+    FirebaseUser user;
 
     void Start()
     {
@@ -27,10 +33,12 @@ public class GameSceneManager : MonoBehaviourPun
             players = new List<GameObject>();
             SpawnPlayer();
             Countdown();
+            DBreference = FirebaseDatabase.DefaultInstance.RootReference;
+            auth = FirebaseAuth.DefaultInstance;
+            user = auth.CurrentUser;
         }
     }
 
-    #region Game Scene Manager
     void SpawnPlayer()
     {
         int point = 0;
@@ -50,7 +58,7 @@ public class GameSceneManager : MonoBehaviourPun
             StartCoroutine(CountdownCoroutine());
         } 
     }
-    IEnumerator CountdownCoroutine()
+    IEnumerator CountdownCoroutine() // TODO: --Lobbymanager'in timer'ını kullan
     {
         while (matchTime >= 0 && !isMatchOver)
         {
@@ -67,9 +75,7 @@ public class GameSceneManager : MonoBehaviourPun
         matchTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         matchTime--;
     }
-    #endregion
 
-    #region Endgame Manager
     public void MatchIsOver(int seconds = 0)
     {
         if (!isMatchOver)
@@ -110,6 +116,7 @@ public class GameSceneManager : MonoBehaviourPun
         Result.SetActive(true);
         resultText.text = result;
         scoreText.text = CalculateScore(baseScore).ToString();
+        StartCoroutine(UpdateScoreCoroutine(int.Parse(scoreText.text)));
     }
     int CalculateScore(int baseScore)
     {
@@ -124,15 +131,45 @@ public class GameSceneManager : MonoBehaviourPun
     {
         isMatchOver = true;
     }
-    [PunRPC]
+    [PunRPC] //  TODO : -- RPC olmasına gerek var mı
     void LeaveRoomRPC()
     {
         PhotonNetwork.LeaveRoom();
     }
-
     public void GoToLobby()
     {
         PhotonNetwork.LoadLevel(0);
     }
-    #endregion
+
+    IEnumerator UpdateScoreCoroutine(int score)
+    {
+        var DBTaskGet = DBreference.Child("users").Child(user.UserId).Child("score").GetValueAsync();
+
+        yield return new WaitUntil(predicate: () => DBTaskGet.IsCompleted);
+
+        if (DBTaskGet.Exception != null)
+        {
+            Debug.LogWarning(message: $"Failed to register task with {DBTaskGet.Exception}");
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTaskGet.Result;
+
+            int baseScore = Convert.ToInt32(snapshot.Value);
+            baseScore += score;
+
+            var DBTaskSet = DBreference.Child("users").Child(user.UserId).Child("score").SetValueAsync(baseScore);
+
+            yield return new WaitUntil(predicate: () => DBTaskSet.IsCompleted);
+
+            if (DBTaskSet.Exception != null)
+            {
+                Debug.LogWarning(message: $"Failed to register task with {DBTaskSet.Exception}");
+            }
+            else
+            {
+            }
+        }
+        
+    }
 }

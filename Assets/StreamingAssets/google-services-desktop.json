@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "68899714126",
+    "firebase_url": "https://tankshot-e9683-default-rtdb.firebaseio.com",
+    "project_id": "tankshot-e9683",
+    "storage_bucket": "tankshot-e9683.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68899714126:android:cb6f88dd9e6d624859bf1f",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.TankShot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68899714126-226iv4k105h5e7m231gkkq0o1aij0q8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0-7DQDORriFQvg7SHSm939bGjD1-nSp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68899714126-226iv4k105h5e7m231gkkq0o1aij0q8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

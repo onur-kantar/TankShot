@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class PreparePool : MonoBehaviour
 {
-    [SerializeField] List<GameObject> prefabs;
-    void Start()
+    [SerializeField] public List<GameObject> prefabs;
+    //[HideInInspector] public List<string> features;
+    void Awake()
     {
         DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
         if (pool != null && prefabs != null && pool.ResourceCache.Count == 0)
@@ -17,5 +18,4 @@ public class PreparePool : MonoBehaviour
             }
         }
     }
-
 }

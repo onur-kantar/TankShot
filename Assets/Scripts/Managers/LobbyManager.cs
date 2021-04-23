@@ -7,37 +7,53 @@ using Random = UnityEngine.Random;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField]
-    Button searcMatchButton;
-    [SerializeField]
-    TextMeshProUGUI loadText; 
+    [SerializeField] Button searcMatchButton;
+    [SerializeField] Button cancelButton;
+    [SerializeField] GameObject searchingPopup;
+    [SerializeField] TMP_Text searchingText;
+    float timer;
+    bool matchIsSearching;
 
     void Start()
     {
+        timer = 0;
+        matchIsSearching = false;
         if (!PhotonNetwork.IsConnected)
         { 
             searcMatchButton.interactable = false;
-            loadText.text = "Bağlanılıyor...";
             PhotonNetwork.ConnectUsingSettings();
+        }
+    }
+    void Update()
+    {
+        if (matchIsSearching)
+        {
+            timer += Time.deltaTime;
+            DisplayTime(timer);
         }
     }
     public override void OnConnectedToMaster()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
-        loadText.text = "Sunucuya Bağlanıldı!\nSunucu: " + PhotonNetwork.CloudRegion;
         searcMatchButton.interactable = true;
     }
     public void FindMatch()
     {
-        loadText.text = "Maç Aranıyor...";
         PhotonNetwork.JoinRandomRoom();
+        searchingPopup.SetActive(true);
+        cancelButton.interactable = false;
+        searcMatchButton.interactable = false; // TODO: -- kullanıcı odaya girerken değil ararken kapat
+        matchIsSearching = true;
+    }
+    public void CancelMatch()
+    {
+        PhotonNetwork.LeaveRoom();
+        searcMatchButton.interactable = false;
+        searchingPopup.SetActive(false);
+        timer = 0;
+        matchIsSearching = false;
     }
     public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        loadText.text = "Maç Bulunamadı Oda Oluşturuluyor...";
-        MakeRoom();
-    }
-    private void MakeRoom()
     {
         int randomRoomName = Random.Range(0, 5000);
         RoomOptions roomOptions =
@@ -49,8 +65,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             IsOpen = true,
             MaxPlayers = 2
         };
-        PhotonNetwork.CreateRoom("RoomName_" + randomRoomName, roomOptions);
-        loadText.text = "Maç Bulunamadığı İçin Oda Oluşturuldu\nOyuncu Bekleniyor...";
+        PhotonNetwork.CreateRoom(Constant.ROOM_NAME + randomRoomName, roomOptions);
     }
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
@@ -58,5 +73,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.LoadLevel(1);
         }
+    }
+    void DisplayTime(float timeToDisplay)
+    {
+        timeToDisplay += 1;
+
+        float minutes = Mathf.FloorToInt(timeToDisplay / 60);
+        float seconds = Mathf.FloorToInt(timeToDisplay % 60);
+
+        searchingText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        cancelButton.interactable = true;
     }
 }

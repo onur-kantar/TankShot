@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47116c1be12ba64fb0e722b8bcee1b2, type: 3}
+  m_Name: ShotGunTurret
+  m_EditorClassIdentifier: 
+  artwork: {fileID: 21300000, guid: 9332cf0d233636a40a024382720294a3, type: 3}
+  bullet: {fileID: 1715623934347650240, guid: bbf8499c731668a4694258cef52cf071, type: 3}
+  ammo: 3
+  bulletCount: 5
+  coolDown: 2
+  renewalTime: 0

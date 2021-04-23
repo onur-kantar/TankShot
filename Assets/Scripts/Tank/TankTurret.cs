@@ -1,46 +1,53 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using UnityEngine;
 
 public class TankTurret : MonoBehaviourPunCallbacks
 {
     public TankBody ownerTankBody;
 
-    [Header ("Rotate")]
+    [Header("Rotate")]
     [SerializeField] float rotateSpeed;
     VariableJoystick aimJoystick;
     Vector3 direction;
 
     [Header("Shoot")]
-    [SerializeField] GameObject bulletPrefab;
     [SerializeField] Transform shootPoint;
-    [SerializeField] float coolDown, maxAmmo;
     float timeStamp;
-    float currentAmmo;
+    [HideInInspector] public float currentAmmo;
     bool permissionToShoot;
+
+    [Header("Turret")]
+    [SerializeField] Turret defaultTurret;
+    [HideInInspector] public Turret turret;
+    public SpriteRenderer spriteRenderer;
 
     [Header("Laser")]
     [SerializeField] float distanceRay;
     LineRenderer lineRenderer;
     RaycastHit2D hit;
-    
+
     void Start()
     {
-        aimJoystick = GameObject.Find("Aim").GetComponent<VariableJoystick>();
-        currentAmmo = maxAmmo;
-        lineRenderer = GetComponent<LineRenderer>();
+        if (photonView.IsMine)
+        {
+            photonView.RPC("RevertDefaultTurret", RpcTarget.All, photonView.ViewID);
+            aimJoystick = GameObject.Find("Aim").GetComponent<VariableJoystick>();
+            lineRenderer = GetComponent<LineRenderer>();
+        }
     }
     void FixedUpdate()
     {
         if (photonView.IsMine)
         {
             Rotate();
-            ShootLaser();
+            Laser();
             Shoot();
         }
     }
 
-    #region Rotate
     void Rotate()
     {
         if (aimJoystick.Direction.magnitude != 0)
@@ -50,9 +57,7 @@ public class TankTurret : MonoBehaviourPunCallbacks
             transform.up = Vector2.Lerp(transform.up, direction, rotateSpeed * Time.fixedDeltaTime);
         }
     }
-    #endregion
 
-    #region Shoot
     void Shoot()
     {
         if (aimJoystick.isDrop && permissionToShoot)
@@ -63,25 +68,50 @@ public class TankTurret : MonoBehaviourPunCallbacks
                 //GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
                 //bullet.GetComponent<Bullet>().ownerTankTurret = this;
                 //ownerTankBody.GetComponent<PhotonView>().RPC("OnHit", RpcTarget.Others);
-                photonView.RPC("ShootRPC", RpcTarget.All, shootPoint.position, shootPoint.rotation, PhotonNetwork.AllocateViewID(false));
-                ReduceAmmo();
+                StartCoroutine(ShootCoroutine());
             }
-            aimJoystick.isDrop = false;
+            aimJoystick.isDrop = false; //TODO: -- Event
         }
     }
     [PunRPC]
-    public void ShootRPC(Vector3 bulletStartPosition, Quaternion bulletStartRotation, int viewId)
+    void ShootRPC(Vector3 bulletStartPosition, Quaternion bulletStartRotation, int viewId)
     {
-        GameObject bullet = Instantiate(bulletPrefab, bulletStartPosition, bulletStartRotation);
+        GameObject bullet = Instantiate(turret.bullet, bulletStartPosition, bulletStartRotation);
         bullet.GetComponent<PhotonView>().ViewID = viewId;
         bullet.GetComponent<Bullet>().ownerTankTurret = this;
     }
-    //TODO: --
+    IEnumerator ShootCoroutine()
+    {
+        if (turret.bulletCount > 1)
+        {
+            for (int i = 0; i < turret.bulletCount; i++)
+            {
+                Quaternion randomRotate = Random.rotation;
+                randomRotate = Quaternion.RotateTowards(shootPoint.rotation, randomRotate, 10);
+                photonView.RPC("ShootRPC", RpcTarget.All, shootPoint.position, randomRotate, PhotonNetwork.AllocateViewID(false));
+            }
+        }
+        else
+        {
+            photonView.RPC("ShootRPC", RpcTarget.All, shootPoint.position, shootPoint.rotation, PhotonNetwork.AllocateViewID(false));
+        }
+        ReduceAmmo();
+        if (turret.renewalTime > 0)
+        { 
+            yield return new WaitForSeconds(turret.renewalTime);
+            IncreaseAmmo();
+        }
+        else if (currentAmmo == 0)
+        {
+            photonView.RPC("RevertDefaultTurret", RpcTarget.All, photonView.ViewID);
+        }
+    }
+    //TODO: -- photon instantiate dene
     void ReduceAmmo()
     {
         currentAmmo--;
     }
-    public void IncreaseAmmo()
+    void IncreaseAmmo()
     {
         currentAmmo++;
     }
@@ -89,21 +119,18 @@ public class TankTurret : MonoBehaviourPunCallbacks
     {
         if (timeStamp <= Time.time)
         {
-            timeStamp = Time.time + coolDown;
+            timeStamp = Time.time + turret.coolDown;
             return true;
         }
         return false;
     }//TODO: -- IEnumerator
-    #endregion
 
-    #region Laser
-    void ShootLaser()
+    void Laser()
     {
         if (aimJoystick.Direction.magnitude > 0.3f)
         {
-            int layerMask = 1 << 8;
-            layerMask = ~layerMask;
-            hit = Physics2D.Raycast(shootPoint.position, shootPoint.up, distanceRay, layerMask);
+            LayerMask mask = LayerMask.GetMask("Raycast");
+            hit = Physics2D.Raycast(shootPoint.position, shootPoint.up, distanceRay, mask);
             if (hit)
             {
                 Draw2DRay(shootPoint.position, hit.point);
@@ -126,5 +153,12 @@ public class TankTurret : MonoBehaviourPunCallbacks
         lineRenderer.SetPosition(0, startPos);
         lineRenderer.SetPosition(1, endPos);
     }
-    #endregion
+    [PunRPC] //TODO: -- başka bir yöntem?
+    void RevertDefaultTurret(int viewId)
+    {
+        TankTurret tankTurret = PhotonView.Find(viewId).gameObject.GetComponent<TankTurret>();
+        tankTurret.turret = tankTurret.defaultTurret;
+        tankTurret.spriteRenderer.sprite = tankTurret.defaultTurret.artwork;
+        tankTurret.currentAmmo = tankTurret.defaultTurret.ammo;
+    }
 }
