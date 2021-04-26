@@ -22,8 +22,6 @@ public class AuthManager : MonoBehaviour
     DatabaseReference databaseRef;
     ScoreBoardManager scoreBoardManager;
 
-    [SerializeField] TMP_Text ss;
-
     void Awake()
     {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
