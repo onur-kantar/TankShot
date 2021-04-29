@@ -9,55 +9,55 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] GameObject settingsPopup;
     bool music;
-    bool voice;
-    bool connection;
+    bool sound;
+    bool vibration;
     [SerializeField] TMP_Text musicButtonText;
-    [SerializeField] TMP_Text voiceButtonText;
-    [SerializeField] TMP_Text connectButtonText;
+    [SerializeField] TMP_Text soundButtonText;
+    [SerializeField] TMP_Text vibrationButtonText;
 
     void Start()
     {
         FirebaseAuth auth = FirebaseAuth.DefaultInstance;
         FirebaseUser user = auth.CurrentUser;
-        connection = true;
+        vibration = true;
         music = true;
-        voice = true;
+        sound = true;
     }
-    public void ChangeMusic()
+    public void ToggleMusicUI()
     {
         music = !music;
         if (music)
         {
-            musicButtonText.text = "MUSIC ON";
+            musicButtonText.text = "MUSIC\nON";
 
         }
         else
         {
-            musicButtonText.text = "MUSIC OFF";
+            musicButtonText.text = "MUSIC\nOFF";
         }
     }
-    public void ChangeVoice()
+    public void ToggleSoundUI()
     {
-        voice = !voice;
-        if (voice)
+        sound = !sound;
+        if (sound)
         {
-            voiceButtonText.text = "VOICE ON"; ;
+            soundButtonText.text = "SOUND\nON"; ;
         }
         else
         {
-            voiceButtonText.text = "VOICE OFF"; ;
+            soundButtonText.text = "SOUND\nOFF"; ;
         }
     }
-    public void ChangeConnection()
+    public void ToggleVibrationUI()
     {
-        connection = !connection;
-        if (connection)
+        vibration = !vibration;
+        if (vibration)
         {
-            connectButtonText.text = "CONNECT";
+            vibrationButtonText.text = "VIBRATION\nON";
         }
         else
         {
-            connectButtonText.text = "DISCONNECT";
+            vibrationButtonText.text = "VIBRATION\nOFF";
         }
     }
     public void ShowSettingsPanel()

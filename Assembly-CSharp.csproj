@@ -83,6 +83,7 @@
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\ChatAppIdCheckerUI.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\AppSettingsExtensions.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\SignInStatus.cs" />
+    <Compile Include="Assets\LoadingManager.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\Achievement.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\NamePickGui.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Android\AndroidJavaConverter.cs" />
@@ -116,7 +117,7 @@
     <Compile Include="Assets\GooglePlayGames\OurUtils\Logger.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\IgnoreUiRaycastWhenInactive.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\PlayerStats.cs" />
-    <Compile Include="Assets\Scripts\ConsoleToGUI.cs" />
+    <Compile Include="Assets\Scripts\Managers\ConsoleToGUI.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\Nearby\AdvertisingResult.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\Video\VideoCaptureState.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\TokenClient.cs" />
@@ -132,10 +133,12 @@
     <Compile Include="Assets\Scripts\Managers\PreparePool.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\Nearby\ConnectionResponse.cs" />
+    <Compile Include="Assets\Scripts\Managers\Sound.cs" />
     <Compile Include="Assets\Photon\PhotonChat\Demos\DemoChat\FriendItem.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\Player.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\Nearby\ConnectionRequest.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\Android\AndroidEventsClient.cs" />
+    <Compile Include="Assets\PhotonManager.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\SavedGame\ISavedGameClient.cs" />
     <Compile Include="Assets\GooglePlayGames\OurUtils\PlayGamesHelperObject.cs" />
     <Compile Include="Assets\GooglePlayGames\ISocialPlatform\PlayGamesLeaderboard.cs" />
@@ -157,7 +160,6 @@
     <Compile Include="Assets\GooglePlayGames\ISocialPlatform\PlayGamesUserProfile.cs" />
     <Compile Include="Assets\GooglePlayGames\BasicApi\Nearby\EndpointDetails.cs" />
     <Compile Include="Assets\Scripts\Managers\GameSceneManager.cs" />
-    <Compile Include="Assets\Scripts\Managers\Sound.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

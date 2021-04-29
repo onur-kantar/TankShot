@@ -14,27 +14,23 @@ using System.Threading.Tasks;
 //TODO: -- baştan sona her şeyi incele
 public class AuthManager : MonoBehaviour
 {
-    DependencyStatus dependencyStatus;
     FirebaseAuth auth;
     FirebaseUser user;
-    [SerializeField] TMP_InputField displayNameInput;
-    [SerializeField] GameObject displayNamePanel;
     DatabaseReference databaseRef;
     ScoreBoardManager scoreBoardManager;
+    LoadingManager loadingManager;
 
     void Awake()
     {
+        loadingManager = GetComponent<LoadingManager>();
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-        .RequestServerAuthCode(false /* Don't force refresh */)
+        .RequestServerAuthCode(false)
         .Build();
         //TODO: -- Düzenleme
         PlayGamesPlatform.InitializeInstance(config);
         PlayGamesPlatform.Activate();
         InitializeFirebase();
         SignInWithPlayGames();
-        
-        //scoreBoardManager = GetComponent<ScoreBoardManager>();
-        //StartCoroutine(InitializeFirebaseCoroutine());
     }
     void InitializeFirebase()
     {
@@ -42,17 +38,14 @@ public class AuthManager : MonoBehaviour
         auth = FirebaseAuth.DefaultInstance;
         databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
     }
-    public void SignInWithPlayGames()
+    void SignInWithPlayGames()
     {
-        // Initialize Firebase Auth
-        //auth = FirebaseAuth.DefaultInstance;
-
-        // Sign In and Get a server auth code.
         Social.localUser.Authenticate((bool success) =>
         {
             if (!success)
             {
                 Debug.LogError("SignInOnClick: Failed to Sign into Play Games Services.");
+                loadingManager.hasError = true;
                 return;
             }
 
@@ -60,29 +53,31 @@ public class AuthManager : MonoBehaviour
             if (string.IsNullOrEmpty(authCode))
             {
                 Debug.LogError("SignInOnClick: Signed into Play Games Services but failed to get the server auth code.");
+                loadingManager.hasError = true;
                 return;
             }
             Debug.LogFormat("SignInOnClick: Auth code is: {0}", authCode);
 
-            // Use Server Auth Code to make a credential
             Credential credential = PlayGamesAuthProvider.GetCredential(authCode);
 
-            // Sign In to Firebase with the credential
             auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
             {
                 if (task.IsCanceled)
                 {
                     Debug.LogError("SignInOnClick was canceled.");
+                    loadingManager.hasError = true;
                     return;
                 }
                 if (task.IsFaulted)
                 {
                     Debug.LogError("SignInOnClick encountered an error: " + task.Exception);
+                    loadingManager.hasError = true;
                     return;
                 }
 
                 FirebaseUser newUser = task.Result;
                 Debug.LogFormat("SignInOnClick: User signed in successfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
+                loadingManager.firebaseIsLoaded = true;
                 StartCoroutine(WriteNewUserCoroutine(newUser.UserId, newUser.DisplayName, 0));
             });
         });
@@ -106,11 +101,12 @@ public class AuthManager : MonoBehaviour
             {
                 Debug.LogFormat("User signed in successfully: {0} ({1})", user.DisplayName, user.UserId);
                 StartCoroutine(scoreBoardManager.LoadScoreboardData());//TODO: -- kullanıcı kendini leaderboard'da aynı görecek
-                displayNamePanel.SetActive(false);
             }
         }
     }
     //////////
+    ///DependencyStatus dependencyStatus;
+    ///
     //IEnumerator InitializeFirebaseCoroutine()
     //{
     //    var DBTask = FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>

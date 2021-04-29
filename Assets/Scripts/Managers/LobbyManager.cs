@@ -71,7 +71,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if(PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.LoadLevel(1);
+            PhotonNetwork.LoadLevel(2);
         }
     }
     void DisplayTime(float timeToDisplay)
