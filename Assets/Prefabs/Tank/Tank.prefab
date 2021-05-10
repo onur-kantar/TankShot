@@ -475,6 +475,10 @@ MonoBehaviour:
   speed: 2
   isAlive: 0
   shield: {fileID: 0}
+  leftLimit: -2
+  rightLimit: 2
+  bottomLimit: -2
+  topLimit: 2
 --- !u!114 &5953052945556303638
 MonoBehaviour:
   m_ObjectHideFlags: 0

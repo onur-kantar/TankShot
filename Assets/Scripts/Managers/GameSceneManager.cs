@@ -138,7 +138,7 @@ public class GameSceneManager : MonoBehaviourPun
     }
     public void GoToLobby()
     {
-        PhotonNetwork.LoadLevel(0);
+        PhotonNetwork.LoadLevel("Lobby");
     }
 
     IEnumerator UpdateScoreCoroutine(int score)
