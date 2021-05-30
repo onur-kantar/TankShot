@@ -13,8 +13,6 @@ public class GameSceneManager : MonoBehaviourPun
     [Header("Game Scene Manager")]
     [SerializeField] GameObject[] spawnPoints;
     [SerializeField] GameObject joysticks;
-    [SerializeField] int matchTime;
-    [SerializeField] TextMeshProUGUI matchTimeText;
     [HideInInspector] public List<GameObject> players;
 
     [Header("Endgame Manager")]
@@ -25,20 +23,25 @@ public class GameSceneManager : MonoBehaviourPun
     FirebaseAuth auth;
     FirebaseUser user;
 
+    CountdownController countdownController;
     void Start()
     {
+        countdownController = GetComponent<CountdownController>();
         if (PhotonNetwork.IsConnected)
         {
             isMatchOver = false;
             players = new List<GameObject>();
             SpawnPlayer();
-            Countdown();
             DBreference = FirebaseDatabase.DefaultInstance.RootReference;
             auth = FirebaseAuth.DefaultInstance;
             user = auth.CurrentUser;
         }
     }
-
+    public void BeginGame()
+    {
+        //Oyun başladığın yapılacaklar
+        countdownController.Countdown();
+    }
     void SpawnPlayer()
     {
         int point = 0;
@@ -51,31 +54,6 @@ public class GameSceneManager : MonoBehaviourPun
         PhotonNetwork.Instantiate("Tank", spawnPoints[point].transform.position, Quaternion.identity);
         
     }
-    void Countdown()
-    {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            StartCoroutine(CountdownCoroutine());
-        } 
-    }
-    IEnumerator CountdownCoroutine() // TODO: --Lobbymanager'in timer'ını kullan
-    {
-        while (matchTime >= 0 && !isMatchOver)
-        {
-            photonView.RPC("CountdownRPC", RpcTarget.All);
-            yield return new WaitForSeconds(1);
-        }
-        MatchIsOver();
-    }
-    [PunRPC]
-    void CountdownRPC()
-    {
-        float minutes = Mathf.FloorToInt(matchTime / 60);
-        float seconds = Mathf.FloorToInt(matchTime % 60);
-        matchTimeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
-        matchTime--;
-    }
-
     public void MatchIsOver(int seconds = 0)
     {
         if (!isMatchOver)
@@ -93,18 +71,18 @@ public class GameSceneManager : MonoBehaviourPun
         bool p2IsAlive = players[1].GetComponent<TankBody>().isAlive;
         if (p1IsAlive == p2IsAlive)
         {
-            photonView.RPC("ResultScreenRPC", RpcTarget.All, "Draw", 0);
+            photonView.RPC("ResultScreenRPC", RpcTarget.All, "DRAW", 0);
         }
         else { 
             if (p1IsAlive)
             {
-                photonView.RPC("ResultScreenRPC", players[0].GetComponent<PhotonView>().Owner, "Win", 10);
-                photonView.RPC("ResultScreenRPC", players[1].GetComponent<PhotonView>().Owner, "Lose", -10);
+                photonView.RPC("ResultScreenRPC", players[0].GetComponent<PhotonView>().Owner, "WIN", 10);
+                photonView.RPC("ResultScreenRPC", players[1].GetComponent<PhotonView>().Owner, "LOSE", -10);
             }
             else
             {
-                photonView.RPC("ResultScreenRPC", players[0].GetComponent<PhotonView>().Owner, "Lose", -10);
-                photonView.RPC("ResultScreenRPC", players[1].GetComponent<PhotonView>().Owner, "Win", 10);
+                photonView.RPC("ResultScreenRPC", players[0].GetComponent<PhotonView>().Owner, "LOSE", -10);
+                photonView.RPC("ResultScreenRPC", players[1].GetComponent<PhotonView>().Owner, "WIN", 10);
             }
         }
         photonView.RPC("LeaveRoomRPC", RpcTarget.All);
@@ -112,18 +90,20 @@ public class GameSceneManager : MonoBehaviourPun
     [PunRPC]
     void ResultScreenRPC(string result, int baseScore)
     {
+        int score;
         joysticks.SetActive(false);
         Result.SetActive(true);
         resultText.text = result;
-        scoreText.text = CalculateScore(baseScore).ToString();
-        StartCoroutine(UpdateScoreCoroutine(int.Parse(scoreText.text)));
+        score = CalculateScore(baseScore);
+        scoreText.text = score.ToString() + "PT";
+        StartCoroutine(UpdateScoreCoroutine(score));
     }
     int CalculateScore(int baseScore)
     {
-        matchTime++;
-        if (matchTime < 1)
-            matchTime = 1;
-        int totalScore = baseScore * matchTime;
+        countdownController.matchTime++;
+        if (countdownController.matchTime < 1)
+            countdownController.matchTime = 1;
+        int totalScore = baseScore * countdownController.matchTime;
         return totalScore;
     }
     [PunRPC]

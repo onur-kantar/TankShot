@@ -1,4 +1,5 @@
 ﻿using Firebase.Auth;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,10 +10,6 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] GameObject settingsPopup;
 
-    void Start()
-    {
-        FirebaseAuth auth = FirebaseAuth.DefaultInstance;
-    }
     public void ShowSettingsPanel()
     {
         settingsPopup.SetActive(true);

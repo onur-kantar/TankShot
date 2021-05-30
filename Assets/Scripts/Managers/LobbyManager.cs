@@ -18,6 +18,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         timer = 0;
         matchIsSearching = false;
+        AudioManager.instance.Play("LobbyMusic");
         if (!PhotonNetwork.IsConnected)
         { 
             searcMatchButton.interactable = false;

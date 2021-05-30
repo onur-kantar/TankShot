@@ -28,7 +28,6 @@ public class TankTurret : MonoBehaviourPunCallbacks
     [SerializeField] float distanceRay;
     LineRenderer lineRenderer;
     RaycastHit2D hit;
-
     void Start()
     {
         if (photonView.IsMine)
@@ -68,6 +67,8 @@ public class TankTurret : MonoBehaviourPunCallbacks
                 //GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
                 //bullet.GetComponent<Bullet>().ownerTankTurret = this;
                 //ownerTankBody.GetComponent<PhotonView>().RPC("OnHit", RpcTarget.Others);
+                VibrationManager.Vibrate(100);
+                StartCoroutine(CameraShaker.instance.Shake(.1f, .2f));
                 StartCoroutine(ShootCoroutine());
             }
             aimJoystick.isDrop = false; //TODO: -- Event

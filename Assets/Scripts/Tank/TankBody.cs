@@ -16,6 +16,7 @@ public class TankBody : MonoBehaviourPun
     public Player tankPlayer;
     [HideInInspector] public GameObject shield;
 
+    [Header("Camera Limits")]
     [SerializeField] float leftLimit;
     [SerializeField] float rightLimit;
     [SerializeField] float bottomLimit;
@@ -39,7 +40,6 @@ public class TankBody : MonoBehaviourPun
         if (photonView.IsMine)
         {
             Move();
-
             mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
             mainCamera.transform.position = new Vector3
                 (
@@ -47,8 +47,6 @@ public class TankBody : MonoBehaviourPun
                     Mathf.Clamp(mainCamera.transform.position.y, bottomLimit, topLimit),
                     mainCamera.transform.position.z
                 );
-            //mainCamera.transform.position = new Vector3(transform.position.x, transform.position.y, -10);
-            //if
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)

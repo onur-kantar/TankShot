@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -14,90 +12,47 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] TMP_Text soundButtonText;
     [SerializeField] TMP_Text vibrationButtonText;
 
-    public Sound[] sounds;
-    private void Awake()
+    private void Start()
     {
-        foreach (Sound sound in sounds)
-        {
-            sound.source = gameObject.AddComponent<AudioSource>();
-            sound.source.clip = sound.clip;
-            sound.source.volume = sound.volume;
-            sound.source.pitch = sound.pitch;
-            sound.source.loop = sound.loop;
-        }
         GetMusic();
         GetSound();
         GetVibration();
     }
 
-    private void Start()
+    public void ToggleMusics()
     {
-        Play("LobbyMusic");
-    }
-    public void Play (string name)
-    {
-        Sound sound = Array.Find(sounds, sound => sound.name == name);
-        if (sound.name == null)
-            return;
-        sound.source.Play();
+        isMusicActive = !isMusicActive;
+        PlayerPrefs.SetInt("music", Convert.ToInt32(isMusicActive));
+        GetMusic();
     }
     public void ToggleSounds()
     {
-        foreach (Sound sound in sounds)
-        {
-            if (sound.type == Type.sound)
-            {
-                if (isSoundActive)
-                {
-                    sound.source.volume = 0;
-                }
-                else
-                {
-                    sound.source.volume = sound.volume;
-                }
-                isSoundActive = !isSoundActive;
-                PlayerPrefs.SetInt("sound", Convert.ToInt32(isSoundActive));
-                GetSound();
-            }
-        }
+        isSoundActive = !isSoundActive;
+        PlayerPrefs.SetInt("sound", Convert.ToInt32(isSoundActive));
+        GetSound();
     }
-    public void ToggleMusics()
+    public void ToggleVibration()
     {
-        foreach (Sound sound in sounds)
-        {
-            if (sound.type == Type.music)
-            {
-                if (isMusicActive)
-                {
-                    sound.source.volume = 0;
-                }
-                else
-                {
-                    sound.source.volume = sound.volume;
-                }
-                isMusicActive = !isMusicActive;
-                PlayerPrefs.SetInt("music", Convert.ToInt32(isMusicActive));
-                GetMusic();
-            }
-        }
+        isVibrationActive = !isVibrationActive;
+        PlayerPrefs.SetInt("vibration", Convert.ToInt32(isVibrationActive));
+        GetVibration();
     }
-
     void GetMusic()
     {
         isMusicActive = Convert.ToBoolean(PlayerPrefs.GetInt("music", 1));
-        foreach (Sound sound in sounds)
+        foreach (Sound sound in AudioManager.instance.sounds)
         {
             if (sound.type == Type.music)
             {
                 if (isMusicActive)
                 {
-                    sound.source.volume = sound.volume;
                     musicButtonText.text = "MUSIC\nON";
+                    sound.source.volume = sound.volume;
                 }
                 else
                 {
-                    sound.source.volume = 0;
                     musicButtonText.text = "MUSIC\nOFF";
+                    sound.source.volume = 0;
                 }
             }
         }
@@ -105,19 +60,19 @@ public class SettingsManager : MonoBehaviour
     void GetSound()
     {
         isSoundActive = Convert.ToBoolean(PlayerPrefs.GetInt("sound", 1));
-        foreach (Sound sound in sounds)
+        foreach (Sound sound in AudioManager.instance.sounds)
         {
             if (sound.type == Type.sound)
             {
                 if (isSoundActive)
                 {
-                    sound.source.volume = sound.volume;
                     soundButtonText.text = "SOUND\nON";
+                    sound.source.volume = sound.volume;
                 }
                 else
                 {
-                    sound.source.volume = 0;
                     soundButtonText.text = "SOUND\nOFF";
+                    sound.source.volume = 0;
                 }
             }
         }
@@ -125,7 +80,7 @@ public class SettingsManager : MonoBehaviour
     void GetVibration()
     {
         isVibrationActive = Convert.ToBoolean(PlayerPrefs.GetInt("vibration", 1));
-
+        VibrationManager.isVibrationActive = isVibrationActive;
         if (isVibrationActive)
         {
             vibrationButtonText.text = "VIBRATION\nON";
