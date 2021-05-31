@@ -37,11 +37,11 @@ public class GameSceneManager : MonoBehaviourPun
             user = auth.CurrentUser;
         }
     }
-    public void BeginGame()
-    {
-        //Oyun başladığın yapılacaklar
-        countdownController.Countdown();
-    }
+    //public void BeginGame()
+    //{
+    //    //Oyun başladığın yapılacaklar
+    //    countdownController.Countdown();
+    //}
     void SpawnPlayer()
     {
         int point = 0;

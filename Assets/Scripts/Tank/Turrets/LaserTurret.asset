@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47116c1be12ba64fb0e722b8bcee1b2, type: 3}
   m_Name: LaserTurret
   m_EditorClassIdentifier: 
-  artwork: {fileID: 21300000, guid: 3bf6d9f920f7458448a390f80318ebe6, type: 3}
+  artwork: {fileID: 21300000, guid: 41420219aa0a4494d95e5147d12a101c, type: 3}
   bullet: {fileID: 3752555758887422760, guid: 8984aebc31657a74d9cfd4d46a88da74, type: 3}
   ammo: 1
   bulletCount: 0

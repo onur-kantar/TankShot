@@ -1500,7 +1500,7 @@ GameObject:
   - component: {fileID: 1610778020}
   - component: {fileID: 1610778019}
   m_Layer: 5
-  m_Name: CountDown Text (TMP)
+  m_Name: Countdown Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2373,12 +2373,12 @@ GameObject:
   - component: {fileID: 2066346204}
   - component: {fileID: 2066346203}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Countdown Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2066346202
 RectTransform:
   m_ObjectHideFlags: 0

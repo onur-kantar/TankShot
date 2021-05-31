@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e47116c1be12ba64fb0e722b8bcee1b2, type: 3}
   m_Name: ShotGunTurret
   m_EditorClassIdentifier: 
-  artwork: {fileID: 21300000, guid: 9332cf0d233636a40a024382720294a3, type: 3}
+  artwork: {fileID: 21300000, guid: 039bc460318be7c4fa168966001c6357, type: 3}
   bullet: {fileID: 1715623934347650240, guid: bbf8499c731668a4694258cef52cf071, type: 3}
   ammo: 3
   bulletCount: 5
