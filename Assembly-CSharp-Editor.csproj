@@ -70,17 +70,29 @@
     <Compile Include="Assets\Joystick Pack\Scripts\Editor\DynamicJoystickEditor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Firebase\Editor\FirebaseDatabase_version-7.2.0_manifest.txt" />
+    <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.165.dll" />
+    <None Include="Assets\ExternalDependencyManager\Editor\Google.PackageManagerResolver_v1.2.165.dll" />
     <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.162.dll" />
+    <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_version-1.2.165_manifest.txt" />
     <None Include="Assets\GooglePlayGames\Editor\m2repository\com\google\games\gpgs-plugin-support\maven-metadata.xml" />
+    <None Include="Assets\ExternalDependencyManager\Editor\Google.JarResolver_v1.2.165.dll" />
     <None Include="Assets\GooglePlayGames\Editor\template-GameInfo.txt" />
     <None Include="Assets\ExternalDependencyManager\Editor\Google.IOSResolver_v1.2.162.dll" />
     <None Include="Assets\ExternalDependencyManager\Editor\Google.JarResolver_v1.2.162.dll" />
+    <None Include="Assets\Firebase\Editor\FirebaseAuth_version-7.2.0_manifest.txt" />
     <None Include="Assets\ExternalDependencyManager\Editor\external-dependency-manager_version-1.2.162_manifest.txt" />
     <None Include="Assets\ExternalDependencyManager\Editor\Google.PackageManagerResolver_v1.2.162.dll" />
     <None Include="Assets\GooglePlayGames\Editor\GooglePlayGamesPlugin_v0.10.12.txt" />
+    <None Include="Assets\Firebase\Editor\AuthDependencies.xml" />
+    <None Include="Assets\Firebase\Editor\AppDependencies.xml" />
+    <None Include="Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll" />
+    <None Include="Assets\ExternalDependencyManager\Editor\Google.IOSResolver_v1.2.165.dll" />
     <None Include="Assets\GooglePlayGames\Editor\GooglePlayGamesPluginDependencies.xml" />
     <None Include="Assets\GooglePlayGames\Editor\template-AndroidManifest.txt" />
+    <None Include="Assets\Firebase\Editor\DatabaseDependencies.xml" />
     <None Include="Assets\GooglePlayGames\Editor\template-Constants.txt" />
+    <None Include="Assets\Firebase\Editor\Firebase.Editor.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -327,10 +339,10 @@
       <HintPath>Assets\Photon\PhotonLibs\Photon3Unity3D.dll</HintPath>
     </Reference>
     <Reference Include="Google.PackageManagerResolver_v1.2.165">
-      <HintPath>Library\PackageCache\com.google.external-dependency-manager@1.2.165\ExternalDependencyManager\Editor\Google.PackageManagerResolver_v1.2.165.dll</HintPath>
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.PackageManagerResolver_v1.2.165.dll</HintPath>
     </Reference>
     <Reference Include="Google.VersionHandler">
-      <HintPath>Library\PackageCache\com.google.external-dependency-manager@1.2.165\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.VersionHandler.dll</HintPath>
     </Reference>
     <Reference Include="GitHub.Unity.45">
       <HintPath>Assets\Plugins\GitHub\Editor\GitHub.Unity.45.dll</HintPath>
@@ -338,23 +350,17 @@
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.5.7\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
-    <Reference Include="Google.PackageManagerResolver_v1.2.162">
-      <HintPath>Assets\ExternalDependencyManager\Editor\Google.PackageManagerResolver_v1.2.162.dll</HintPath>
-    </Reference>
     <Reference Include="Firebase.App">
-      <HintPath>Library\PackageCache\com.google.firebase.app@7.2.0\Firebase\Plugins\Firebase.App.dll</HintPath>
+      <HintPath>Assets\Firebase\Plugins\Firebase.App.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Google.JarResolver_v1.2.162">
-      <HintPath>Assets\ExternalDependencyManager\Editor\Google.JarResolver_v1.2.162.dll</HintPath>
-    </Reference>
     <Reference Include="Firebase.Editor">
-      <HintPath>Library\PackageCache\com.google.firebase.app@7.2.0\Firebase\Editor\Firebase.Editor.dll</HintPath>
+      <HintPath>Assets\Firebase\Editor\Firebase.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Database">
-      <HintPath>Library\PackageCache\com.google.firebase.database@7.2.0\Firebase\Plugins\Firebase.Database.dll</HintPath>
+      <HintPath>Assets\Firebase\Plugins\Firebase.Database.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Plastic.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.5.7\Lib\Editor\PlasticSCM\Unity.Plastic.Antlr3.Runtime.dll</HintPath>
@@ -363,22 +369,19 @@
       <HintPath>Assets\Photon\PhotonLibs\WebSocket\websocket-sharp.dll</HintPath>
     </Reference>
     <Reference Include="Google.JarResolver_v1.2.165">
-      <HintPath>Library\PackageCache\com.google.external-dependency-manager@1.2.165\ExternalDependencyManager\Editor\Google.JarResolver_v1.2.165.dll</HintPath>
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.JarResolver_v1.2.165.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.TaskExtension">
-      <HintPath>Library\PackageCache\com.google.firebase.app@7.2.0\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
+      <HintPath>Assets\Firebase\Plugins\Firebase.TaskExtension.dll</HintPath>
     </Reference>
     <Reference Include="Google.MiniJson">
-      <HintPath>Library\PackageCache\com.google.firebase.app@7.2.0\Firebase\Plugins\Google.MiniJson.dll</HintPath>
+      <HintPath>Assets\Firebase\Plugins\Google.MiniJson.dll</HintPath>
     </Reference>
     <Reference Include="GitHub.UnityShim">
       <HintPath>Assets\Plugins\GitHub\Editor\GitHub.UnityShim.dll</HintPath>
     </Reference>
-    <Reference Include="Google.IOSResolver_v1.2.162">
-      <HintPath>Assets\ExternalDependencyManager\Editor\Google.IOSResolver_v1.2.162.dll</HintPath>
-    </Reference>
     <Reference Include="Firebase.Platform">
-      <HintPath>Library\PackageCache\com.google.firebase.app@7.2.0\Firebase\Plugins\Firebase.Platform.dll</HintPath>
+      <HintPath>Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
     </Reference>
     <Reference Include="GitHub.Api.45">
       <HintPath>Assets\Plugins\GitHub\Editor\GitHub.Api.45.dll</HintPath>
@@ -387,22 +390,19 @@
       <HintPath>Assets\Plugins\GitHub\Editor\sfw.net.dll</HintPath>
     </Reference>
     <Reference Include="Google.VersionHandlerImpl_v1.2.165">
-      <HintPath>Library\PackageCache\com.google.external-dependency-manager@1.2.165\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.165.dll</HintPath>
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.165.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Compat">
-      <HintPath>Library\PackageCache\com.google.firebase.app@7.2.0\Parse\Plugins\dotNet45\Unity.Compat.dll</HintPath>
+      <HintPath>Assets\Parse\Plugins\dotNet45\Unity.Compat.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Tasks">
-      <HintPath>Library\PackageCache\com.google.firebase.app@7.2.0\Parse\Plugins\dotNet45\Unity.Tasks.dll</HintPath>
+      <HintPath>Assets\Parse\Plugins\dotNet45\Unity.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="Google.IOSResolver_v1.2.165">
-      <HintPath>Library\PackageCache\com.google.external-dependency-manager@1.2.165\ExternalDependencyManager\Editor\Google.IOSResolver_v1.2.165.dll</HintPath>
-    </Reference>
-    <Reference Include="Google.VersionHandlerImpl_v1.2.162">
-      <HintPath>Assets\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.162.dll</HintPath>
+      <HintPath>Assets\ExternalDependencyManager\Editor\Google.IOSResolver_v1.2.165.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Auth">
-      <HintPath>Library\PackageCache\com.google.firebase.auth@7.2.0\Firebase\Plugins\Firebase.Auth.dll</HintPath>
+      <HintPath>Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Library\PackageCache\com.unity.ext.nunit@1.0.6\net35\unity-custom\nunit.framework.dll</HintPath>
@@ -779,9 +779,6 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
@@ -832,13 +829,13 @@
       <Project>{3889BC5E-78C0-E1BD-7BB1-C4D0FC897B8F}</Project>
       <Name>PhotonRealtime</Name>
     </ProjectReference>
-    <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
-      <Project>{5C1AEEFE-64B9-B865-CB3B-B853D38843E5}</Project>
-      <Name>PunDemos.DemoSlotcarEditor</Name>
-    </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.csproj">
       <Project>{C174F355-492D-9EFD-8860-8F340A233A72}</Project>
       <Name>PhotonUnityNetworking.Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="PunDemos.DemoSlotcarEditor.csproj">
+      <Project>{5C1AEEFE-64B9-B865-CB3B-B853D38843E5}</Project>
+      <Name>PunDemos.DemoSlotcarEditor</Name>
     </ProjectReference>
     <ProjectReference Include="PhotonUnityNetworking.Utilities.Culling.Editor.csproj">
       <Project>{99CC615E-D67C-14D2-90EB-55B3379C322F}</Project>
