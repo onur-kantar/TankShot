@@ -72,6 +72,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if(PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
         {
+            AudioManager.instance.Stop("LobbyMusic");
             PhotonNetwork.LoadLevel("Arena");
         }
     }

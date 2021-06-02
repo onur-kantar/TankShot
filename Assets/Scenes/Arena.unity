@@ -1632,11 +1632,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1704506476}
-  - component: {fileID: 1704506475}
   - component: {fileID: 1704506478}
   - component: {fileID: 1704506477}
+  - component: {fileID: 1704506475}
   - component: {fileID: 1704506479}
   - component: {fileID: 1704506480}
+  - component: {fileID: 1704506481}
   m_Layer: 0
   m_Name: GameSceneManager
   m_TagString: Untagged
@@ -1750,6 +1751,18 @@ MonoBehaviour:
   starCountdownTime: 3
   starCountdownText: {fileID: 1610778019}
   starCountdownPanel: {fileID: 2066346201}
+--- !u!114 &1704506481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704506474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed6e701a28864a46895a02edcbb1974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1739195063
 GameObject:
   m_ObjectHideFlags: 0

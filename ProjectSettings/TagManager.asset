@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Feature
   - Bullet
+  - Button
   layers:
   - Default
   - TransparentFX
