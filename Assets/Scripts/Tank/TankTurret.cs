@@ -28,6 +28,10 @@ public class TankTurret : MonoBehaviourPunCallbacks
     [SerializeField] float distanceRay;
     LineRenderer lineRenderer;
     RaycastHit2D hit;
+
+    [Header("Particle System")]
+    [SerializeField] ParticleSystem smokePS;
+
     void Start()
     {
         if (photonView.IsMine)
@@ -80,6 +84,7 @@ public class TankTurret : MonoBehaviourPunCallbacks
         GameObject bullet = Instantiate(turret.bullet, bulletStartPosition, bulletStartRotation);
         bullet.GetComponent<PhotonView>().ViewID = viewId;
         bullet.GetComponent<Bullet>().ownerTankTurret = this;
+        smokePS.Play();
     }
     IEnumerator ShootCoroutine()
     {

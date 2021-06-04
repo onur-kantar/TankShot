@@ -3,7 +3,9 @@ guid: 6a507bf1501ae464488a55fb6108b0d5
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ownerTankTurret: {instanceID: 0}
+  - hitWallPS: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

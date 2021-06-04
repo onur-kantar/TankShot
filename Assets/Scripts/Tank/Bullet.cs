@@ -10,6 +10,9 @@ public class Bullet : MonoBehaviourPun
     [HideInInspector] public TankTurret ownerTankTurret;
     Rigidbody2D rb2d;
 
+    [Header("Particle System")]
+    [SerializeField] GameObject hitWallPS;//ateş etme
+
     void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -19,7 +22,8 @@ public class Bullet : MonoBehaviourPun
 
     void Move()
     {
-        rb2d.velocity = transform.up * speed;
+        rb2d.AddForce(transform.up * speed);
+        //rb2d.velocity = transform.up * speed;
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -40,7 +44,8 @@ public class Bullet : MonoBehaviourPun
         else
         {
             transform.up = Vector2.Reflect(transform.up, collision.contacts[0].normal); ;
-            Move();
+            Instantiate(hitWallPS, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].normal));
+            //Move();
         }
     }
     [PunRPC]

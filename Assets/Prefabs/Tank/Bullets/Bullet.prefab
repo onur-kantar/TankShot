@@ -119,9 +119,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a507bf1501ae464488a55fb6108b0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 500
   time: 5
   ownerTankTurret: {fileID: 0}
+  hitWallPS: {fileID: 3862359088529419466, guid: 74cb8148707893d4da66b8f0c4a72c53,
+    type: 3}
 --- !u!114 &1471194992721978355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +156,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 2616172063108275219}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0b09466ec0564e845a6d4d489182ab7d, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

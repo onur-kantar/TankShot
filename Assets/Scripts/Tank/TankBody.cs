@@ -34,6 +34,7 @@ public class TankBody : MonoBehaviourPun
         {
             mainCamera = GameObject.Find("Main Camera");
         }
+
     }
     void FixedUpdate()
     {
@@ -77,8 +78,8 @@ public class TankBody : MonoBehaviourPun
                 transform.Translate(0f, speed * Time.deltaTime, 0f);
             }
         }
+        
     }
-
     public void OnHit(int viewId)
     {
         photonView.RPC("OnHitRPC", RpcTarget.All, viewId);

@@ -9,7 +9,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 3752555758887422760}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0b09466ec0564e845a6d4d489182ab7d, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -123,6 +123,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002050130722535059, guid: 3787653d3ecfbfd4780d4809b2e016b9,
+        type: 3}
+      propertyPath: speed
+      value: 850
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8836119958284346629, guid: 3787653d3ecfbfd4780d4809b2e016b9, type: 3}

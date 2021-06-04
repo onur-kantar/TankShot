@@ -18,30 +18,38 @@ public class CountdownController : MonoBehaviourPun
         gameSceneManager = GetComponent<GameSceneManager>();
         if (PhotonNetwork.IsMasterClient)
         {
-            photonView.RPC("StartCountdownRPC", RpcTarget.All);
+            StartCoroutine(StartCountdownCoroutine());
         }
     }
     IEnumerator StartCountdownCoroutine()
     {
-        starCountdownPanel.gameObject.SetActive(true);
-        matchTimeText.gameObject.SetActive(false);
-
+        //starCountdownPanel.gameObject.SetActive(true);
+        //matchTimeText.gameObject.SetActive(false);
+        photonView.RPC("ChangePanelRPC", RpcTarget.All, true, false);
         while (starCountdownTime > 0)
         {
-            starCountdownText.text = starCountdownTime.ToString();
+            photonView.RPC("StartCountdownRPC", RpcTarget.All, starCountdownTime.ToString());
+            //starCountdownText.text = starCountdownTime.ToString();
             yield return new WaitForSeconds(1);
             starCountdownTime--;
         }
-        starCountdownText.text = "GO!";
+        photonView.RPC("StartCountdownRPC", RpcTarget.All, "GO!");
         yield return new WaitForSeconds(1);
-        starCountdownPanel.gameObject.SetActive(false);
-        matchTimeText.gameObject.SetActive(true);
+        photonView.RPC("ChangePanelRPC", RpcTarget.All, false, true);
+        //starCountdownPanel.gameObject.SetActive(false);
+        //matchTimeText.gameObject.SetActive(true);
         Countdown();
     }
     [PunRPC]
-    void StartCountdownRPC()
+    void ChangePanelRPC(bool countdownPanel, bool timeText)
     {
-        StartCoroutine(StartCountdownCoroutine());
+        starCountdownPanel.gameObject.SetActive(countdownPanel);
+        matchTimeText.gameObject.SetActive(timeText);
+    }
+    [PunRPC]
+    void StartCountdownRPC(string text)
+    {
+        starCountdownText.text = text;
     }
     void Countdown()
     {
