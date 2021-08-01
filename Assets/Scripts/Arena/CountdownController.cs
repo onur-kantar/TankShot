@@ -8,6 +8,7 @@ public class CountdownController : MonoBehaviourPun
 {
     public int matchTime;
     GameSceneManager gameSceneManager;
+    [SerializeField] FeatureCreator featureCreator;
     [SerializeField] TextMeshProUGUI matchTimeText;
     [SerializeField] int starCountdownTime;
     [SerializeField] TextMeshProUGUI starCountdownText;
@@ -16,6 +17,9 @@ public class CountdownController : MonoBehaviourPun
     private void Start()
     {
         gameSceneManager = GetComponent<GameSceneManager>();
+    }
+    public void StartCountdown()
+    {
         if (PhotonNetwork.IsMasterClient)
         {
             StartCoroutine(StartCountdownCoroutine());
@@ -38,6 +42,7 @@ public class CountdownController : MonoBehaviourPun
         photonView.RPC("ChangePanelRPC", RpcTarget.All, false, true);
         //starCountdownPanel.gameObject.SetActive(false);
         //matchTimeText.gameObject.SetActive(true);
+        featureCreator.isCreating = true;
         Countdown();
     }
     [PunRPC]

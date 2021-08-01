@@ -35,6 +35,10 @@ public class AuthManager : MonoBehaviour
     void InitializeFirebase()
     {
         Debug.Log("Setting up Firebase Auth");
+        if (auth != null)
+        {
+            auth.SignOut();
+        }
         auth = FirebaseAuth.DefaultInstance;
         databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
     }
@@ -48,7 +52,6 @@ public class AuthManager : MonoBehaviour
                 loadingManager.hasError = true;
                 return;
             }
-
             string authCode = PlayGamesPlatform.Instance.GetServerAuthCode();
             if (string.IsNullOrEmpty(authCode))
             {
@@ -58,28 +61,31 @@ public class AuthManager : MonoBehaviour
             }
             Debug.LogFormat("SignInOnClick: Auth code is: {0}", authCode);
 
-            Credential credential = PlayGamesAuthProvider.GetCredential(authCode);
-
-            auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
+            PlayGamesPlatform.Instance.GetAnotherServerAuthCode(true, (authCode) =>
             {
-                if (task.IsCanceled)
+                Credential credential = PlayGamesAuthProvider.GetCredential(authCode);
+                auth.SignInWithCredentialAsync(credential).ContinueWith(task =>
                 {
-                    Debug.LogError("SignInOnClick was canceled.");
-                    loadingManager.hasError = true;
-                    return;
-                }
-                if (task.IsFaulted)
-                {
-                    Debug.LogError("SignInOnClick encountered an error: " + task.Exception);
-                    loadingManager.hasError = true;
-                    return;
-                }
+                    if (task.IsCanceled)
+                    {
+                        Debug.LogError("SignInOnClick was canceled.");
+                        loadingManager.hasError = true;
+                        return;
+                    }
+                    if (task.IsFaulted)
+                    {
+                        Debug.LogError("SignInOnClick encountered an error: ");
+                        loadingManager.hasError = true;
+                        return;
+                    }
 
-                FirebaseUser newUser = task.Result;
-                Debug.LogFormat("SignInOnClick: User signed in successfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
-                loadingManager.firebaseIsLoaded = true;
-                StartCoroutine(WriteNewUserCoroutine(newUser.UserId, newUser.DisplayName, 0));
+                    FirebaseUser newUser = task.Result;
+                    Debug.LogFormat("SignInOnClick: User signed in successfully: {0} ({1})", newUser.DisplayName, newUser.UserId);
+                    loadingManager.firebaseIsLoaded = true;
+                    StartCoroutine(WriteNewUserCoroutine(newUser.UserId, newUser.DisplayName, 0));
+                });
             });
+
         });
     }
 
@@ -100,7 +106,7 @@ public class AuthManager : MonoBehaviour
             else
             {
                 Debug.LogFormat("User signed in successfully: {0} ({1})", user.DisplayName, user.UserId);
-                StartCoroutine(scoreBoardManager.LoadScoreboardData());//TODO: -- kullanıcı kendini leaderboard'da aynı görecek
+                scoreBoardManager.LoadScoreboard();//TODO: -- kullanıcı kendini leaderboard'da aynı görecek
             }
         }
     }

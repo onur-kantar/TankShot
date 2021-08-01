@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   artwork: {fileID: 21300000, guid: 41420219aa0a4494d95e5147d12a101c, type: 3}
   bullet: {fileID: 3752555758887422760, guid: 8984aebc31657a74d9cfd4d46a88da74, type: 3}
+  sound: LaserTurret
   ammo: 1
   bulletCount: 0
   coolDown: 0

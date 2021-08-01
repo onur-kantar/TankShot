@@ -3,26 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shield : MonoBehaviour
+public class Shield : MonoBehaviourPun, ICanCollide
 {
-    [HideInInspector] public TankBody owner;
-
-    void Update()
+    [HideInInspector] public Transform ownerTank;
+    [SerializeField] GameObject hitShieldPS;
+    private void Update()
     {
-        if(owner != null)
-            transform.position = owner.transform.position;
+        transform.position = ownerTank.position;
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    void FixedUpdate()
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 1.1f);
+        foreach (var hitCollider in hitColliders)
         {
-            CircleCollider2D m_Collider = GetComponent<CircleCollider2D>();
-            Vector3 m_Center = m_Collider.bounds.center;
-            if (!(m_Collider.radius / 3 > Vector3.Distance(collision.transform.position, m_Center)))
+            if (hitCollider.gameObject.CompareTag("Bullet"))
             {
-                collision.gameObject.GetComponent<PhotonView>().RPC("DestroyBulletRPC", RpcTarget.All);
+                if (hitCollider.gameObject.GetComponent<PhotonView>().IsMine)
+                {
+                    if (Vector3.Dot((transform.position - hitCollider.gameObject.transform.position),
+                                     hitCollider.gameObject.transform.position - (hitCollider.gameObject.transform.position + hitCollider.gameObject.transform.up)) < 0)
+                    {
+                        Physics2D.IgnoreCollision(hitCollider.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+                    }
+                    else
+                    {
+                        Physics2D.IgnoreCollision(hitCollider.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+                    }
+                }
             }
+        }
+    }
+    public void OnCollide(Collision2D collision)
+    {
+        if (Vector3.Dot((transform.position - collision.gameObject.transform.position),
+                            collision.gameObject.transform.position - (collision.gameObject.transform.position + collision.gameObject.transform.up)) >= 0)
+        {
+            photonView.RPC("OnCollideRPC", RpcTarget.All, collision.contacts[0].point, collision.contacts[0].normal);
+            //AudioManager.instance.Play("HitShield");
+            //Instantiate(hitShieldPS, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].normal));
         }
     }
     [PunRPC]
@@ -30,4 +48,11 @@ public class Shield : MonoBehaviour
     {
         Destroy(gameObject);
     }
+    [PunRPC]
+    void OnCollideRPC(Vector2 point, Vector2 normal)
+    {
+        Instantiate(hitShieldPS, point, Quaternion.LookRotation(normal));
+        AudioManager.instance.Play("HitShield");
+    }
 }
+

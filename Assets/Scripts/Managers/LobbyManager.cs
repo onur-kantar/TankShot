@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -11,11 +12,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] Button cancelButton;
     [SerializeField] GameObject searchingPopup;
     [SerializeField] TMP_Text searchingText;
+    [SerializeField] GameObject loadingScreen;
+    SceneLoader sceneLoader;
+    UIManager uiManager;
     float timer;
     bool matchIsSearching;
 
     void Start()
     {
+        uiManager = GetComponent<UIManager>();
+        sceneLoader = GetComponent<SceneLoader>();
+
         timer = 0;
         matchIsSearching = false;
         AudioManager.instance.Play("LobbyMusic");
@@ -37,6 +44,14 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         searcMatchButton.interactable = true;
+    }
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        uiManager.ShowErrorScreen();
+    }
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene("Loading");
     }
     public void FindMatch()
     {
@@ -72,9 +87,16 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if(PhotonNetwork.CurrentRoom.PlayerCount == 2 && PhotonNetwork.IsMasterClient)
         {
+            photonView.RPC("CancelButtonSetActive", RpcTarget.All);
             AudioManager.instance.Stop("LobbyMusic");
-            PhotonNetwork.LoadLevel("Arena");
+            sceneLoader.LoadScene("Arena");
         }
+    }
+    [PunRPC]
+    void CancelButtonSetActive()
+    {
+        loadingScreen.SetActive(true);
+        cancelButton.interactable = false;
     }
     void DisplayTime(float timeToDisplay)
     {
@@ -85,7 +107,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         searchingText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
-
     public override void OnJoinedRoom()
     {
         cancelButton.interactable = true;

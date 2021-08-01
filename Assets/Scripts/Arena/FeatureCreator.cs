@@ -8,13 +8,17 @@ public class FeatureCreator : MonoBehaviourPun
     [SerializeField] ArenaCreator arenaCreator;
     [SerializeField] GameSceneManager gameSceneManager;
     [SerializeField] PreparePool preparePool;
-    [SerializeField] int time;
+    [SerializeField] float time;
     [SerializeField] int totalFeatureCount;
     [HideInInspector] public int currentFeatureCount;
+    [HideInInspector] public bool isCreating;
     List<string> featurePrefabs;
+
+    [SerializeField] GameObject featurePref;
 
     void Start()
     {
+        isCreating = false;
         if (PhotonNetwork.IsMasterClient)
         {
             featurePrefabs = new List<string>();
@@ -25,35 +29,40 @@ public class FeatureCreator : MonoBehaviourPun
                     featurePrefabs.Add(prefab.name);
                 }
             }
-            //featurePrefabs = preparePool.features;
             currentFeatureCount = 0;
-            CreateFeature();
         }
     }
-    public void CreateFeature()
+    private void Update()
     {
-        StartCoroutine(FeatureCreatorCoroutine());
-
+        if (!gameSceneManager.isMatchOver && currentFeatureCount < totalFeatureCount && currentFeatureCount >= 0)
+        {
+            StartCoroutine(FeatureCreatorCoroutine());
+            isCreating = false;
+        }
     }
     IEnumerator FeatureCreatorCoroutine()
-    {            
-        yield return new WaitForSeconds(time);
-        if (currentFeatureCount < totalFeatureCount && currentFeatureCount >= 0)
+    {
+        if (isCreating)
         {
-            int r, c;
-            int feature = Random.Range(0, featurePrefabs.Count);
-            do
+            yield return new WaitForSeconds(time);
+            if (!gameSceneManager.isMatchOver)
             {
-                r = Random.Range(0, arenaCreator.arena.GetLength(0));
-                c = Random.Range(0, arenaCreator.arena.GetLength(1));
-            }
-            while (arenaCreator.arena[r, c].isThereFeature == true);
+                int r, c;
+                int feature = Random.Range(0, featurePrefabs.Count);
+                do
+                {
+                    r = Random.Range(0, arenaCreator.arena.GetLength(0));
+                    c = Random.Range(0, arenaCreator.arena.GetLength(1));
+                }
+                while (arenaCreator.arena[r, c].isThereFeature == true);
 
-            GameObject go = PhotonNetwork.Instantiate(featurePrefabs[feature], arenaCreator.arena[r, c].position, Quaternion.identity);
-            arenaCreator.arena[r, c].isThereFeature = true;
-            photonView.RPC("FeatureCreatorRPC", RpcTarget.All, go.GetComponent<PhotonView>().ViewID);
-            currentFeatureCount++;
+                GameObject go = PhotonNetwork.Instantiate(featurePrefabs[feature], arenaCreator.arena[r, c].position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+                arenaCreator.arena[r, c].isThereFeature = true;
+                photonView.RPC("FeatureCreatorRPC", RpcTarget.All, go.GetComponent<PhotonView>().ViewID);
+                currentFeatureCount++;
+            }
         }
+        isCreating = true;
     }
     [PunRPC]
     void FeatureCreatorRPC(int viewId)

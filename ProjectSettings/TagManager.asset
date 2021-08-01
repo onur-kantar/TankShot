@@ -16,9 +16,9 @@ TagManager:
   - UI
   - 
   - 
-  - 'DoNotCollisionWithEachOther '
+  - DoNotCollisionWithEachOther 1
   - Raycast
-  - 
+  - Shield
   - 
   - 
   - 

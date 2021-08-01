@@ -42,7 +42,7 @@ public class SettingsManager : MonoBehaviour
         isMusicActive = Convert.ToBoolean(PlayerPrefs.GetInt("music", 1));
         foreach (Sound sound in AudioManager.instance.sounds)
         {
-            if (sound.type == Type.music)
+            if (sound.type == AudioType.music)
             {
                 if (isMusicActive)
                 {
@@ -62,7 +62,7 @@ public class SettingsManager : MonoBehaviour
         isSoundActive = Convert.ToBoolean(PlayerPrefs.GetInt("sound", 1));
         foreach (Sound sound in AudioManager.instance.sounds)
         {
-            if (sound.type == Type.sound)
+            if (sound.type == AudioType.sound)
             {
                 if (isSoundActive)
                 {

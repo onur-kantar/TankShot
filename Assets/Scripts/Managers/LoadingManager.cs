@@ -9,21 +9,15 @@ public class LoadingManager : MonoBehaviour
     [HideInInspector] public bool photonIsLoaded = false;
     [HideInInspector] public bool firebaseIsLoaded = false;
     [HideInInspector] public bool hasError = false;
-    bool sceneIsLoading = false;
     [SerializeField] GameObject loadingScreen;
     [SerializeField] GameObject errorScreen;
-
-    private void Start()
-    {
-        Scene scene = SceneManager.GetActiveScene();
-        Debug.Log(scene.name);
-    }
+    bool sceneIsLoading = false;
     private void Update()
     {
-        if (hasError)
+        if (hasError && !errorScreen.activeInHierarchy)
         {
-            loadingScreen.SetActive(false);
-            errorScreen.SetActive(true);
+           loadingScreen.SetActive(false);
+           errorScreen.SetActive(true);
         }
         else if(photonIsLoaded && firebaseIsLoaded && !sceneIsLoading)
         {

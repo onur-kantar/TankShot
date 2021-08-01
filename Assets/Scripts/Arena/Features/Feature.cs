@@ -1,25 +1,17 @@
 ﻿using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Feature : MonoBehaviourPun
 {
+    [HideInInspector] public GameObject _player;
     [HideInInspector] public FeatureCreator featureCreator;
-
-    private void Start()
-    {
-        CreateFeature();
-    }
     [PunRPC]
-    public void CreateFeature()
+    public void FeatureCollected()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            featureCreator.CreateFeature();
-        }
-    }
-    [PunRPC]
-    public void CloseView()
-    {
+        GameObject featurePS = Resources.Load<GameObject>("FeaturePS");
+        Instantiate(featurePS, transform.position, Quaternion.identity);
+        AudioManager.instance.Play("Feature");
         GetComponent<SpriteRenderer>().enabled = false;
         GetComponent<Collider2D>().enabled = false;
     }
@@ -34,5 +26,6 @@ public abstract class Feature : MonoBehaviourPun
         featureCreator.currentFeatureCount--;
     }
     public abstract void AddFeature(GameObject player);
+    public abstract void RemoveFeature();
 
 }

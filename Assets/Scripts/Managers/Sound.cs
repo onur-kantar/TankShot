@@ -13,12 +13,12 @@ public class Sound
     public float pitch;
 
     public bool loop;
-    public Type type;
+    public AudioType type;
 
     [HideInInspector]
     public AudioSource source;
 }
-public enum Type
+public enum AudioType
 {
     sound,
     music,

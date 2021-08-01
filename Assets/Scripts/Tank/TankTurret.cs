@@ -20,8 +20,8 @@ public class TankTurret : MonoBehaviourPunCallbacks
     bool permissionToShoot;
 
     [Header("Turret")]
-    [SerializeField] Turret defaultTurret;
-    [HideInInspector] public Turret turret;
+    [SerializeField] TurretAttribute defaultTurret;
+    [HideInInspector] public TurretAttribute turret;
     public SpriteRenderer spriteRenderer;
 
     [Header("Laser")]
@@ -72,7 +72,6 @@ public class TankTurret : MonoBehaviourPunCallbacks
                 //bullet.GetComponent<Bullet>().ownerTankTurret = this;
                 //ownerTankBody.GetComponent<PhotonView>().RPC("OnHit", RpcTarget.Others);
                 VibrationManager.Vibrate(100);
-                StartCoroutine(CameraShaker.instance.Shake(.1f, .2f));
                 StartCoroutine(ShootCoroutine());
             }
             aimJoystick.isDrop = false; //TODO: -- Event
@@ -84,6 +83,8 @@ public class TankTurret : MonoBehaviourPunCallbacks
         GameObject bullet = Instantiate(turret.bullet, bulletStartPosition, bulletStartRotation);
         bullet.GetComponent<PhotonView>().ViewID = viewId;
         bullet.GetComponent<Bullet>().ownerTankTurret = this;
+        StartCoroutine(CameraShaker.instance.Shake(.1f, .2f));
+        AudioManager.instance.Play(turret.sound);
         smokePS.Play();
     }
     IEnumerator ShootCoroutine()

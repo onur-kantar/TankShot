@@ -1,8 +1,9 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class TankBody : MonoBehaviourPun
+public class TankBody : MonoBehaviourPun, ICanCollide
 {
     public TankTurret ownTurret;
     [SerializeField] float rotateSpeed;
@@ -15,6 +16,7 @@ public class TankBody : MonoBehaviourPun
     GameObject mainCamera;
     public Player tankPlayer;
     [HideInInspector] public GameObject shield;
+    public List<Feature> features = new List<Feature>();
 
     [Header("Camera Limits")]
     [SerializeField] float leftLimit;
@@ -22,13 +24,15 @@ public class TankBody : MonoBehaviourPun
     [SerializeField] float bottomLimit;
     [SerializeField] float topLimit;
 
+    [Header("Particle System")]
+    [SerializeField] GameObject deathPS;
+
     void Start()
     {
         defaultSpeed = speed;
         isAlive = true;
         tankPlayer = photonView.Owner;
         gameSceneManager = GameObject.Find("GameSceneManager").GetComponent<GameSceneManager>();
-        gameSceneManager.players.Add(gameObject); //TODO: -- Just master
         movementJoystick = GameObject.Find("Movement").GetComponent<VariableJoystick>();
         if (photonView.IsMine)
         {
@@ -52,11 +56,20 @@ public class TankBody : MonoBehaviourPun
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (photonView.IsMine)
+        Feature feature = collision.gameObject.GetComponent<Feature>();
+        if (feature != null)
         {
-            Feature feature = collision.gameObject.GetComponent<Feature>();
-            if (feature != null)
+            if (photonView.IsMine)
             {
+                foreach (Feature f in features)
+                {
+                    if (feature.GetType().Name == f.GetType().Name)
+                    {
+                        f.RemoveFeature();
+                        break;
+                    }
+                }
+                features.Add(feature);
                 feature.AddFeature(gameObject);
             }
         }
@@ -80,16 +93,20 @@ public class TankBody : MonoBehaviourPun
         }
         
     }
-    public void OnHit(int viewId)
-    {
-        photonView.RPC("OnHitRPC", RpcTarget.All, viewId);
-        gameSceneManager.MatchIsOver(3); //TODO: -- should it work in everyone
-    }
     [PunRPC]
-    void OnHitRPC(int viewId)
+    void OnCollideRPC(int viewId)
     {
         GameObject player = PhotonView.Find(viewId).gameObject;
         player.GetComponent<TankBody>().isAlive = false;
+        Instantiate(deathPS, player.transform.position, Quaternion.identity);
+        AudioManager.instance.Play("Explosion");
         player.SetActive(false);
+    }
+
+    public void OnCollide(Collision2D collision)
+    {
+        photonView.RPC("OnCollideRPC", RpcTarget.All, photonView.ViewID);
+        collision.otherCollider.gameObject.GetComponent<PhotonView>().RPC("DestroyBulletRPC", RpcTarget.All);
+        gameSceneManager.MatchIsOver(3); //TODO: -- should it work in everyone
     }
 }

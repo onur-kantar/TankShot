@@ -363,11 +363,11 @@
     <Reference Include="Google.VersionHandlerImpl_v1.2.165">
       <HintPath>Assets\ExternalDependencyManager\Editor\Google.VersionHandlerImpl_v1.2.165.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Compat">
-      <HintPath>Assets\Parse\Plugins\dotNet45\Unity.Compat.dll</HintPath>
-    </Reference>
     <Reference Include="Firebase.Platform">
       <HintPath>Assets\Firebase\Plugins\Firebase.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Compat">
+      <HintPath>Assets\Parse\Plugins\dotNet45\Unity.Compat.dll</HintPath>
     </Reference>
     <Reference Include="Firebase.Auth">
       <HintPath>Assets\Firebase\Plugins\Firebase.Auth.dll</HintPath>

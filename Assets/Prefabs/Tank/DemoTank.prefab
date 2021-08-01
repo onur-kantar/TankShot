@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1807701658891119103}
   - component: {fileID: 7049450032387107235}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5666010517481436195}
   - component: {fileID: 851896437269468619}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: DemoTank
   m_TagString: Player
   m_Icon: {fileID: 0}

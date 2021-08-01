@@ -19,33 +19,28 @@ public class Bullet : MonoBehaviourPun
         Move();
         Destroy(gameObject, time);
     }
-
+    private void Update()
+    {
+        Vector2 moveDirection = rb2d.velocity;
+        if (moveDirection != Vector2.zero)
+        {
+            float angle = Mathf.Atan2(moveDirection.y, moveDirection.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        }
+    }
     void Move()
     {
         rb2d.AddForce(transform.up * speed);
-        //rb2d.velocity = transform.up * speed;
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (ownerTankTurret.ownerTankBody.tankPlayer.IsLocal)
         {
-            if (ownerTankTurret.ownerTankBody.tankPlayer.IsLocal)
+            ICanCollide canCollide = collision.gameObject.GetComponent<ICanCollide>();
+            if (canCollide != null)
             {
-                ownerTankTurret.ownerTankBody.OnHit(collision.gameObject.GetComponent<PhotonView>().ViewID);
-                gameObject.GetComponent<PhotonView>().RPC("DestroyBulletRPC", RpcTarget.All);
-
-                //ownerTankTurret.ownerTankBody.WhenIHit(collision.gameObject.GetComponent<TankBody>().tankPlayer);
-                //collision.gameObject.GetComponent<PhotonView>().RPC("PlayerLose", collision.gameObject.GetComponent<TankBody>().tankPlayer);
-                //collision.gameObject.GetComponent<PhotonView>().RPC("PlayerWin", RpcTarget.Others);
+                canCollide.OnCollide(collision);
             }
-            //Destroy(collision.gameObject);
-            //Destroy(gameObject); // TODO: -- destroy in everyone
-        }
-        else
-        {
-            transform.up = Vector2.Reflect(transform.up, collision.contacts[0].normal); ;
-            Instantiate(hitWallPS, collision.contacts[0].point, Quaternion.LookRotation(collision.contacts[0].normal));
-            //Move();
         }
     }
     [PunRPC]
