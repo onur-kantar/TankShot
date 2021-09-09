@@ -1376,10 +1376,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ELVOKEC
+  m_text: PlayerName
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: faef7c1dd2286494890f200970f16b8b, type: 2}
-  m_sharedMaterial: {fileID: 2189563236828028268, guid: faef7c1dd2286494890f200970f16b8b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 553667e6fb6a67649aa4437ff4f8d3ed, type: 2}
+  m_sharedMaterial: {fileID: -6672294273063984484, guid: 553667e6fb6a67649aa4437ff4f8d3ed, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1403,17 +1403,17 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.55
+  m_fontSize: 37.05
   m_fontSizeBase: 75
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 40
-  m_fontStyle: 32
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1792,10 +1792,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ELVOKEC
+  m_text: PlayerName
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: faef7c1dd2286494890f200970f16b8b, type: 2}
-  m_sharedMaterial: {fileID: 2189563236828028268, guid: faef7c1dd2286494890f200970f16b8b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 553667e6fb6a67649aa4437ff4f8d3ed, type: 2}
+  m_sharedMaterial: {fileID: -6672294273063984484, guid: 553667e6fb6a67649aa4437ff4f8d3ed, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1819,17 +1819,17 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.55
+  m_fontSize: 37.05
   m_fontSizeBase: 75
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 40
-  m_fontStyle: 32
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2168,7 +2168,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1306940390
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2414,10 +2414,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 305869
+  m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: faef7c1dd2286494890f200970f16b8b, type: 2}
-  m_sharedMaterial: {fileID: 2189563236828028268, guid: faef7c1dd2286494890f200970f16b8b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 553667e6fb6a67649aa4437ff4f8d3ed, type: 2}
+  m_sharedMaterial: {fileID: -6672294273063984484, guid: 553667e6fb6a67649aa4437ff4f8d3ed, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2451,7 +2451,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -4204,10 +4204,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 305869
+  m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: faef7c1dd2286494890f200970f16b8b, type: 2}
-  m_sharedMaterial: {fileID: 2189563236828028268, guid: faef7c1dd2286494890f200970f16b8b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 553667e6fb6a67649aa4437ff4f8d3ed, type: 2}
+  m_sharedMaterial: {fileID: -6672294273063984484, guid: 553667e6fb6a67649aa4437ff4f8d3ed, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4241,7 +4241,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 4096
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -5
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

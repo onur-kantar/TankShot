@@ -70,7 +70,7 @@ public class ScoreBoardManager : MonoBehaviour
                         j++;
                         if (child.Key == user.UserId)
                         {
-                            color = new Color32(181, 23, 158, 255);
+                            color = new Color32(255, 125, 0, 255);
                             username = child.Child("username").Value.ToString();
                             score = int.Parse(child.Child("score").Value.ToString());
                             scoreboardElement = Instantiate(contentPrefab, scoreboardContent);
@@ -84,7 +84,7 @@ public class ScoreBoardManager : MonoBehaviour
                     DataSnapshot childSnapshot = snapshot.Children.Reverse().ElementAt(i);
                     if (childSnapshot.Key == user.UserId)
                     {
-                        color = new Color32(181, 23, 158, 255);
+                        color = new Color32(255, 125, 0, 255);
                         hasUser = true;
                     }
                     else
@@ -92,11 +92,11 @@ public class ScoreBoardManager : MonoBehaviour
                         row++;
                         if (row % 2 == 0)
                         {
-                            color = new Color32(76, 150, 51, 255);
+                            color = new Color32(0, 140, 12, 255);
                         }
                         else
                         {
-                            color = new Color32(76, 173, 51, 255);
+                            color = new Color32(0, 166, 15, 255);
                         }
                     }
                     username = childSnapshot.Child("username").Value.ToString();
